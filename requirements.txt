@@ -1,3 +1,4 @@
 Django
 Psycopg2
 Pillow
+Ipython
