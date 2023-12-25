@@ -2,12 +2,12 @@ from django.shortcuts import render
 from products.models import Product
 
 
-def index(request):
+def catalog(request):
     context = {
         'object_list': Product.objects.all(),
         'title': 'Store - Our products'
     }
-    return render(request, 'products/index.html', context)
+    return render(request, 'products/catalog.html', context)
 
 
 def product(request, pk):
