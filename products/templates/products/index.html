@@ -1,0 +1,26 @@
+{% extends 'products/base.html' %}
+{% block content %}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {% for object in object_list %}
+    <div class="col">
+        <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg"
+                 role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#55595c"/>
+                <p class="fs-3">{{ object.name }}</p></svg>
+            <div class="card-body">
+                <p class="card-text">{{ object.description | truncatechars:100}}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="{% url 'products:product' object.pk %}" type="button"
+                           class="btn btn-sm btn-outline-secondary">to item</a>
+                    </div>
+                    <p class="text-break">{{ object.price }}RUB</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
