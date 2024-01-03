@@ -1,0 +1,46 @@
+{% extends 'products/base.html' %}
+{% load static %}
+{% block content %}
+<img src="/media/blog/bunner.jpg" class="img" width="100%" height="250" alt="bunner">
+
+<div class="album py-4 bg-body-tertiary text-center">
+    <h1>Blog</h1>
+    <div class="container">
+        <div class="row">
+            <p class="d-inline-flex gap-1">
+                <a href="{% url 'blog:create' %}" type="button"
+                   class="btn btn-outline-light">+ Add article</a>
+            </p>
+            {% for object in object_list %}
+            <div class="col">
+                <div class="card shadow-sm">
+
+                    <div class="text-center">
+                        <img src="/media/{{ object.preview }}" class="rounded" alt="preview" width="100%" height="100">
+                    </div>
+
+                    <p class="text-center fw-bold">
+                        {{ object.title | title }}
+                    </p>
+
+                    <div class="card-body">
+                        <p class="text-center">{{ object.content | truncatechars:100}}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="{% url 'blog:view' object.slug %}" type="button"
+                                   class="btn btn-outline-light">View</a>
+                                <a href="{% url 'blog:edit' object.slug %}" type="button"
+                                   class="btn btn-outline-light">Edit</a>
+                                <a href="{% url 'blog:delete' object.slug %}" type="button"
+                                   class="btn btn-outline-danger">Delete</a>
+                            </div>
+                        </div>
+                        <p class="text-end"></p>
+                        <p class="text-end">{{ object.date_created }}</p>
+                        <p class="text-end">{{ object.view_count }} views</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endblock %}

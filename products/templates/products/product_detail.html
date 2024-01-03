@@ -3,6 +3,10 @@
 {% block content %}
 <div class="row">
     <div class="col">
+
+        <a href="{% url 'products:list' %}" type="button"
+                       class="btn btn-outline-light">Back to list</a>
+
         <div class="card shadow-sm">
                 <p class="text-center">{{ object.name }}</p></svg>
             <p class="text-center">{{ object.category }}</p></svg>
