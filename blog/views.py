@@ -17,7 +17,6 @@ class BlogCreateView(CreateView):
         return super().form_valid(form)
 
 
-
 class BlogListView(ListView):
     model = Blog
 
@@ -36,6 +35,7 @@ class BlogDetailView(DetailView):
         self.object.save()
         return self.object
 
+
 class BlogUpdateView(UpdateView):
     model = Blog
     fields = ('title', 'content', 'preview', 'date_created')
@@ -46,7 +46,6 @@ class BlogUpdateView(UpdateView):
             new_article.slug = slugify(new_article.title)
             new_article.save()
         return super().form_valid(form)
-
 
     def get_success_url(self):
         return reverse('blog:view', args=[self.object.slug])

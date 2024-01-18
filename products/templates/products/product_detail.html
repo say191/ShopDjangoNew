@@ -1,32 +1,32 @@
 {% extends 'products/base.html' %}
 {% load my_tags %}
 {% block content %}
-<div class="row">
-    <div class="col">
-
-        <a href="{% url 'products:list' %}" type="button"
-                       class="btn btn-outline-light">Back to list</a>
-
+<a href="{% url 'products:list' %}" type="button"
+   class="btn btn-outline-light mb-3">Back to list</a>
+<div class="col-">
+    <div class="row">
         <div class="card shadow-sm">
-                <p class="text-center">{{ object.name }}</p></svg>
-            <p class="text-center">{{ object.category }}</p></svg>
-
             <div class="text-center">
-                <img src="{{ object.image | mymedia }}" class="rounded" alt="Card image cap">
+                <img src="/media/{{ object.image }}" class="rounded" alt="preview" width="30%" height="200">
             </div>
-
             <div class="card-body">
                 <p class="text-center">{{ object.description }}</p>
+                <p class="text-break">Price: {{ object.price }}RUB</p>
+                <p class="text-break">Date_create: {{ object.date_create }}</p>
+                {% if object.change_data != NULL %}
+                <p class="text-break">Date_edit: {{ object.change_data }}</p>
+                {% endif %}
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                        <div class="btn-group">
-                        </div>
+                        <a href="{% url 'products:view' object.pk %}" type="button"
+                           class="btn btn-outline-light">view</a>
+                        <a href="{% url 'products:edit' object.pk %}" type="button"
+                           class="btn btn-outline-light">edit</a>
+                        <a href="{% url 'products:delete' object.pk %}" type="button"
+                           class="btn btn-outline-danger">Delete</a>
                     </div>
-                    <p class="text-break">{{ object.price }}RUB</p>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-{% endblock %}
+    {% endblock %}

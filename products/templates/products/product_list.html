@@ -4,27 +4,42 @@
 <img src="/media/products/bunner.jpg" class="img" width="100%" height="250" alt="bunner">
 
 <div class="album py-4 bg-body-tertiary text-center">
-    <h1>Store</h1>
+    <h1>Store - our products</h1>
     <div class="container">
         <div class="row">
-            <p class="d-inline-flex gap-1"></p>
-
+            <p class="d-inline-flex gap-1">
+                <a href="{% url 'products:create' %}" type="button"
+                   class="btn btn-outline-light">+ Add product</a>
+            </p>
             {% for object in object_list %}
             <div class="col-3">
                 <div class="card shadow-sm">
-
+                    <p class="text-center"></p>
+                    <h3>{{ object.name }}</h3>
                     <div class="text-center">
                         <img src="/media/{{ object.image }}" class="rounded" alt="preview" width="100%" height="200">
                     </div>
-
                     <div class="card-body">
                         <p class="text-center">{{ object.description | truncatechars:100}}</p>
+                        <p class="text-break">Price: {{ object.price }}RUB</p>
+                        <p class="text-break">Date_create: {{ object.date_create }}</p>
+                        {% if object.change_data != NULL %}
+                        <p class="text-break">Date_edit: {{ object.change_data }}</p>
+                        {% endif %}
+                        {% for version in object.version_set.all %}
+                        {% if version.active_version %}
+                        <p class="text-break">Name version: {{ version.name_version }}</p>
+                        {% endif %}
+                        {% endfor %}
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a href="{% url 'products:view' object.pk %}" type="button"
-                                   class="btn btn-outline-light">to item</a>
+                                   class="btn btn-outline-light">view</a>
+                                <a href="{% url 'products:edit' object.pk %}" type="button"
+                                   class="btn btn-outline-light">edit</a>
+                                <a href="{% url 'products:delete' object.pk %}" type="button"
+                                   class="btn btn-outline-danger">Delete</a>
                             </div>
-                            <p class="text-break">{{ object.price }}RUB</p>
                         </div>
                     </div>
                 </div>
