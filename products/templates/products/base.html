@@ -3,19 +3,15 @@
 <html lang="en" data-bs-theme="auto">
 <head>
     <script src="{% static 'js/color-modes.js' %}"></script>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.118.2">
     <title>Store</title>
-
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-
 </head>
 <body>
-
 <header data-bs-theme="dark">
     <div class="collapse text-bg-dark" id="navbarHeader">
         <div class="container">
@@ -25,6 +21,13 @@
                     <ul class="list-unstyled">
                         <li><a href="{% url 'products:list' %}" class="text-white">Store</a></li>
                         <li><a href="{% url 'blog:list' %}" class="text-white">Blog</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'users:profile' %}" class="text-white">Profile</a></li>
+                        <li><a href="{% url 'users:logout' %}" class="text-white">Logout</a></li>
+                        {% else %}
+                        <li><a href="{% url 'users:login' %}" class="text-white">Login</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'users:register' %}" class="text-white">Sign</a></li>
                     </ul>
                 </div>
             </div>
@@ -39,17 +42,28 @@
         </div>
     </div>
 </header>
-
 <main>
+    {% if user.is_authenticated %}
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-2 px-5">
+                {% if user.avatar %}
+                <img src="/media/{{ user.avatar }}" class="img" width="6%" height="50" alt="bunner">
+                {% else %}
+                <img src="/media/users/empty.png" class="img" width="6%" height="50" alt="bunner">
+                {% endif %}
+            </div>
+            <div class="text mb-3 px-2">
+                {{ user.email }}
+            </div>
+        </div>
+    </div>
+    {% endif %}
     {% block content %}
     {% endblock %}
     </div>
     </div>
-
-
 </main>
-
-
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
