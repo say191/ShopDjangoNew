@@ -36,7 +36,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
-    permission_required = 'products.set_published_status'
+    permission_required = 'products.change_product'
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
