@@ -12,6 +12,7 @@
                    class="btn btn-outline-light">+ Add product</a>
             </p>
             {% for object in object_list %}
+            {% if object.is_published or user.is_staff or user.is_superuser or object.owner == request.user %}
             <div class="col-3">
                 <div class="card shadow-sm">
                     <p class="text-center"></p>
@@ -23,7 +24,7 @@
                         <p class="text-center">{{ object.description | truncatechars:100}}</p>
                         <p class="text-break">Price: {{ object.price }}RUB</p>
                         <p class="text-break">Date_create: {{ object.date_create }}</p>
-                        {% if object.change_data != NULL %}
+                        {% if object.change_data %}
                         <p class="text-break">Date_edit: {{ object.change_data }}</p>
                         {% endif %}
                         {% for version in object.version_set.all %}
@@ -34,16 +35,21 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a href="{% url 'products:view' object.pk %}" type="button"
-                                   class="btn btn-outline-light">view</a>
+                                   class="btn btn-outline-light">View</a>
+                                {% if perms.products.change_product or object.owner == request.user %}
                                 <a href="{% url 'products:edit' object.pk %}" type="button"
-                                   class="btn btn-outline-light">edit</a>
+                                   class="btn btn-outline-light">Edit</a>
+                                {% endif %}
+                                {% if user.is_superuser or object.owner == request.user %}
                                 <a href="{% url 'products:delete' object.pk %}" type="button"
                                    class="btn btn-outline-danger">Delete</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {% endif %}
             {% endfor %}
         </div>
         {% endblock %}

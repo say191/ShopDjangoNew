@@ -2,9 +2,10 @@ from django.views.generic import CreateView, ListView, DetailView, UpdateView, D
 from django.urls import reverse_lazy, reverse
 from blog.models import Blog
 from pytils.translit import slugify
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Blog
     fields = ('title', 'content', 'preview', 'date_created')
     success_url = reverse_lazy('blog:list')
@@ -17,7 +18,7 @@ class BlogCreateView(CreateView):
         return super().form_valid(form)
 
 
-class BlogListView(ListView):
+class BlogListView(LoginRequiredMixin, ListView):
     model = Blog
 
     def get_queryset(self, *args, **kwargs):
@@ -26,7 +27,7 @@ class BlogListView(ListView):
         return queryset
 
 
-class BlogDetailView(DetailView):
+class BlogDetailView(LoginRequiredMixin, DetailView):
     model = Blog
 
     def get_object(self, queryset=None):
@@ -36,7 +37,7 @@ class BlogDetailView(DetailView):
         return self.object
 
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UpdateView):
     model = Blog
     fields = ('title', 'content', 'preview', 'date_created')
 
@@ -51,6 +52,6 @@ class BlogUpdateView(UpdateView):
         return reverse('blog:view', args=[self.object.slug])
 
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy('blog:list')
