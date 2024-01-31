@@ -3,3 +3,5 @@ Psycopg2
 Pillow
 Ipython
 Pytils
+Redis
+Dotenv
